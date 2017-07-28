@@ -43,6 +43,7 @@
       ],
       "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
       "scripts": [
+        "scripts/common/install-git.sh",
         "scripts/common/install-java.sh",
         "scripts/master/install-jenkins.sh"
       ]

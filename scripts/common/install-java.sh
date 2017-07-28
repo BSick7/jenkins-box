@@ -6,8 +6,6 @@
 
 set -euo pipefail
 
-me="install-java"
-
 file="${JAVA_VERSION}-linux-x64.rpm"
 
 echo "downloading java rpm..."

@@ -6,8 +6,6 @@
 
 set -euo pipefail
 
-me="install-jenkins"
-
 file="jenkins-${JENKINS_VERSION}.noarch.rpm"
 
 echo "downloading jenkins rpm..."
