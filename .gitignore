@@ -1,1 +1,9 @@
+# IntelliJ
 .idea/
+
+# packer/boxes
+packer_cache/
+vmx-sources/
+
+# builds
+jenkins-centos7-vmware/
