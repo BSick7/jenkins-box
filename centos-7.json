@@ -1,0 +1,55 @@
+{
+  "variables": {
+    "vm_name": "jenkins-centos7",
+    "java_url": "http://javadl.oracle.com/webapps/download/AutoDL?BundleId=225344_090f390dda5b47b9b721c7dfaa008135",
+    "java_version": "jre_8u144",
+    "jenkins_url": "pkg.jenkins.io/redhat/jenkins-2.70-1.1.noarch.rpm",
+    "jenkins_version": "2.70-1.1",
+    "http_proxy": "",
+    "vmx_path": "vmx-sources/centos-7/centos-7.3-x86_64.vmx"
+  },
+  "builders": [
+    {
+      "type": "vmware-vmx",
+      "vm_name": "{{user `vm_name`}}",
+      "source_path": "{{user `vmx_path`}}",
+      "ssh_port": 22,
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "tools_upload_flavor": "linux",
+      "shutdown_command": "echo 'vagrant' | sudo -S /sbin/halt -h -p",
+      "output_directory": "{{user `vm_name`}}-vmware",
+      "vmx_remove_ethernet_interfaces": true,
+      "vmx_data": {
+        "ethernet0.virtualDev": "e1000",
+        "ethernet0.present": "TRUE",
+        "ethernet0.connectionType": "nat",
+        "ethernet0.wakeOnPcktRcv": "false",
+        "ethernet0.addressType": "generated"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "environment_vars": [
+        "JAVA_URL={{user `java_url`}}",
+        "JAVA_VERSION={{user `java_version`}}",
+        "JENKINS_URL={{user `jenkins_url`}}",
+        "JENKINS_VERSION={{user `jenkins_version`}}",
+        "http_proxy={{user `http_proxy`}}"
+      ],
+      "execute_command": "echo 'vagrant' | {{.Vars}} sudo -S -E sh -eux '{{.Path}}'",
+      "scripts": [
+        "scripts/common/install-java.sh",
+        "scripts/master/install-jenkins.sh"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "output": "builds/{{user `vm_name`}}.{{.Provider}}.box"
+    }
+  ]
+}
