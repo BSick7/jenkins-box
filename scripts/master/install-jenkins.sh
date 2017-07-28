@@ -8,11 +8,13 @@ set -euo pipefail
 
 me="install-jenkins"
 
+file="jenkins-${JENKINS_VERSION}.noarch.rpm"
+
 echo "downloading jenkins rpm..."
-curl -SL -O "${JENKINS_URL}"
+curl -SL -o "/tmp/${file}" "${JENKINS_URL}"
 
 echo "installing jenkins ${JENKINS_VERSION} rpm..."
-rpm -Uvh "./jenkins-${JENKINS_VERSION}.noarch.rpm"
+rpm -Uvh "/tmp/${file}"
 
 echo "starting jenkins..."
 /etc/init.d/jenkins restart

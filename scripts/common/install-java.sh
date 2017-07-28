@@ -11,7 +11,7 @@ me="install-java"
 file="${JAVA_VERSION}-linux-x64.rpm"
 
 echo "downloading java rpm..."
-curl -SL -o "${file}" "${JAVA_URL}"
+curl -SL -o "/tmp/${file}" "${JAVA_URL}"
 
 echo "installing java ${JAVA_VERSION} rpm..."
 rpm -Uvh "/tmp/${file}"
