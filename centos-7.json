@@ -1,6 +1,7 @@
 {
   "variables": {
     "vm_name": "jenkins-centos7",
+    "version": "0.1.0",
     "java_url": "http://javadl.oracle.com/webapps/download/AutoDL?BundleId=225344_090f390dda5b47b9b721c7dfaa008135",
     "java_version": "jre-8u144",
     "jenkins_url": "pkg.jenkins.io/redhat/jenkins-2.70-1.1.noarch.rpm",
@@ -13,6 +14,7 @@
       "type": "vmware-vmx",
       "vm_name": "{{user `vm_name`}}",
       "source_path": "{{user `vmx_path`}}",
+      "headless": true,
       "ssh_port": 22,
       "ssh_username": "vagrant",
       "ssh_password": "vagrant",
@@ -47,9 +49,16 @@
     }
   ],
   "post-processors": [
-    {
-      "type": "vagrant",
-      "output": "builds/{{user `vm_name`}}.{{.Provider}}.box"
-    }
+    [
+      {
+        "type": "vagrant",
+        "output": "builds/{{user `vm_name`}}.{{.Provider}}.box"
+      },
+      {
+        "type": "vagrant-cloud",
+        "version": "{{user `version`}}",
+        "box_tag": "brad_sickles/{{user `vm_name`}}"
+      }
+    ]
   ]
 }

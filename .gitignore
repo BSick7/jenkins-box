@@ -6,4 +6,5 @@ packer_cache/
 vmx-sources/
 
 # builds
+builds/
 jenkins-centos7-vmware/
